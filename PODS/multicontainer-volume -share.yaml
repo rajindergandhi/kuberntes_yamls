@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-multivolume
+  labels:
+   type: frontend
+spec:
+  volumes:
+    - name: jenkinngix
+      emptyDir: {}
+  containers:
+  - name: nginxtest
+    image: nginx
+    volumeMounts:
+    - name: jenkinngix
+      mountPath: /var/html
+    ports:
+     - name: nginxport
+       containerPort: 80
+  - name: jenkinstest
+    image: jenkins/jenkins:lts
+    ports:
+    - name: jenkinport
+      containerPort: 8080
+    - name: slaveagent
+      containerPort: 50000
+    volumeMounts:
+    - name: jenkinngix
+      mountPath: /var/html
