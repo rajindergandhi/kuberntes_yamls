@@ -1,0 +1,29 @@
+kind: ReplicaSet
+metadata:
+  name: my-rs-multiapp
+  labels:
+    type: frontend
+spec:
+  replicas: 3
+  selector:
+     matchLabels:
+       app: my-rs-multiapp
+  template:
+    metadata:
+      name: my-rs-multiapp
+      labels:
+        app: my-rs-multiapp
+    spec:
+      containers:
+      - name: nginxtest
+        image: nginx
+        ports:
+        - name: nginxport
+          containerPort: 80
+      - name: jenkinstest
+        image: jenkins/jenkins:lts
+        ports:
+        - name: jenkinport
+          containerPort: 8080
+        - name: slaveagent
+          containerPort: 50000
