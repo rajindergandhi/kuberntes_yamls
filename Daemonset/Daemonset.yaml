@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet 
+metadata:
+  name: my-ds-multiapp
+  labels:
+    type: frontend
+spec:
+  selector:
+     matchLabels: 
+       app: my-ds-multiapp
+  template:
+    metadata:
+      name: my-ds-dmultiapp
+      labels:
+        app: my-ds-multiapp
+    spec:
+      containers:
+      - name: nginxtest
+        image: nginx
+        ports:
+        - name: nginxport
+          containerPort: 80
+      - name: jenkinstest
+        image: jenkins/jenkins:lts
+        ports:
+        - name: jenkinport
+          containerPort: 8080
+        - name: slaveagent
+          containerPort: 50000
